@@ -2,7 +2,7 @@
 (function () {
 'use strict';
 function f(v,d){return Number(v).toFixed(d).replace('.',',')}
-function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;':'&quot;'}[c]})}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function slider(name,label,min,max,value,step,unit){
   return '<label class="lab-control"><span>'+label+' <output data-show="'+name+'">'+value+' '+unit+'</output></span><input type="range" data-input="'+name+'" min="'+min+'" max="'+max+'" step="'+step+'" value="'+value+'" aria-label="'+label+'"></label>';
 }
