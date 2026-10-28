@@ -1,0 +1,40 @@
+/* Tecnomurillo: mini-laboratorios originales y autónomos */
+.lab-shell{margin:14px 0 22px;padding:18px;border-radius:18px;background:linear-gradient(145deg,#f3fcff,#f5f9ff);border:1px solid #c4dfea;box-shadow:0 4px 18px #143b5910}
+.lab-kicker{display:flex;align-items:center;gap:8px;font-size:.72rem;font-weight:850;text-transform:uppercase;letter-spacing:.08em;color:#0e7181}
+.lab-kicker:before{content:"";width:9px;height:9px;border-radius:50%;background:#0e94a0;box-shadow:0 0 0 4px #d9f2f1}
+.lab-shell h4{margin:8px 0 5px;font-size:1.15rem;color:#15334b}
+.lab-intro{margin:0 0 14px;color:#3e6075;font-size:.88rem}
+.lab-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:16px;align-items:stretch}
+.lab-inputs{display:flex;flex-direction:column;gap:13px;padding:15px;background:#fff;border:1px solid #d7e6eb;border-radius:12px}
+.lab-control{display:block;font-size:.86rem;font-weight:750;color:#284b5c}
+.lab-control>span{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.lab-control output{color:#007b87;font-weight:850;font-variant-numeric:tabular-nums;white-space:nowrap}
+.lab-control input{width:100%;accent-color:#0e8998;margin:9px 0 0;cursor:pointer}
+.lab-results{padding:15px;background:#fff;border:1px solid #d7e6eb;border-radius:12px;min-width:0}
+.lab-result{min-height:110px}
+.lab-metricrow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:12px}
+.lab-metric{padding:10px;border:1px solid #d6e7ea;border-radius:9px;background:#f6fbfc}
+.lab-metric strong{display:block;font-size:1.26rem;color:#126c80;line-height:1.25;font-variant-numeric:tabular-nums}
+.lab-metric small{font-size:.72rem;color:#587283}
+.lab-meter{height:17px;background:#e8eff2;border-radius:8px;overflow:hidden;position:relative}
+.lab-meter i{display:block;height:100%;background:linear-gradient(90deg,#1598a0,#257bb6);border-radius:8px}
+.lab-meter.red i{background:#d8875f}
+.lab-caption{font-size:.76rem;color:#547183;margin:8px 0 0}
+.lab-question{border-left:3px solid #0d8997;background:#e5f4f4;padding:10px 12px;border-radius:0 9px 9px 0;margin-top:13px;font-weight:700;font-size:.85rem;color:#24515e}
+.lab-bars{display:flex;align-items:flex-end;height:105px;gap:14px;border-left:2px solid #9bb9c6;border-bottom:2px solid #9bb9c6;padding:6px 13px 0 15px}
+.lab-barcol{flex:1;display:flex;justify-content:flex-end;align-items:center;flex-direction:column;height:100%;gap:3px}
+.lab-bar{width:min(100%,65px);background:#2c90a0;border-radius:5px 5px 0 0;min-height:2px}
+.lab-bar.alt{background:#e5ac54}
+.lab-barlabel{font-size:.72rem;color:#476273}
+.lab-choices{display:grid;gap:9px}
+.lab-choice{border:1px solid #d3e3e8;border-radius:10px;padding:9px}
+.lab-choice.good{border-color:#74bfa7;background:#effaf6}
+.lab-choice.bad{border-color:#e4b9ad;background:#fff6f1}
+.lab-choice strong{display:block;font-size:.92rem}
+.lab-choice small{font-size:.76rem}
+.lab-code{background:#142e42;color:#e5f2f4;padding:11px;border-radius:9px;font-size:.83rem;overflow-wrap:anywhere}
+.lab-code code{color:inherit}
+.lab-circuit{width:100%;max-height:110px}
+.lab-note{font-size:.75rem;color:#496875;margin-top:9px}
+@media(max-width:690px){.lab-grid{grid-template-columns:1fr}.lab-shell{padding:12px}.lab-shell h4{font-size:1.05rem}}
+@media print{.lab-shell{border:1px solid #9badb6;box-shadow:none;background:#fff}.lab-inputs,.lab-results{background:#fff}.lab-control input{display:none}.lab-question{background:#fff}.lab-meter i,.lab-bar{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
