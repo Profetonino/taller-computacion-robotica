@@ -63,7 +63,7 @@ function results10(box){
  '<p class="lab-caption">'+(a===b?'En este caso ambos coinciden. Prueba los casos frontera: 0, 1 y 2.':'¡Diferencia detectada! El original no rechaza números menores que 2; no basta con recorrer divisores.')+'</p>';
 }
 function results12(box){
- let budget=val(box,'budget'),t=val(box,'time'),x=[['A · Carteles reutilizables',15,2,1],['B · Contenedores',60,3,4],['C · Auditoría semanal',20,6,5]];
+ let budget=val(box,'budget'),t=val(box,'time'),x=[['A · Carteles reutilizables',15,2,1],['B · Contenedores',45,3,4],['C · Auditoría semanal',20,6,5]];
  return '<div class="lab-choices">'+x.map(function(p){const ok=p[1]<=budget&&p[2]<=t;return '<div class="lab-choice '+(ok?'good':'bad')+'"><strong>'+p[0]+' · '+(ok?'Viable':'No viable')+'</strong><small>'+p[1]+' € · '+p[2]+' h · impacto estimado '+p[3]+'/5</small></div>'}).join('')+'</div>'+
  '<p class="lab-caption">Viabilidad no es eficacia: incluso una propuesta viable necesita medir si reduce residuos de verdad.</p>';
 }
