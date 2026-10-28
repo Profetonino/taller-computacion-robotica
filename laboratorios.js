@@ -7,7 +7,7 @@ function slider(name,label,min,max,value,step,unit){
   return '<label class="lab-control"><span>'+label+' <output data-show="'+name+'">'+value+' '+unit+'</output></span><input type="range" data-input="'+name+'" min="'+min+'" max="'+max+'" step="'+step+'" value="'+value+'" aria-label="'+label+'"></label>';
 }
 function shell(id,title,intro,inputs,question) {
-  return '<section class="lab-shell" data-lab="'+id+'" aria-label="Mini laboratorio: '+title+'"><div class="lab-kicker">Mini-laboratorio · 3–5 minutos</div><h4>'+title+'</h4><p class="lab-intro">'+intro+'</p><div class="lab-grid"><div class="lab-inputs">'+inputs+'</div><div class="lab-results"><div class="lab-result" aria-live="polite"></div></div></div><div class="lab-question"><strong>Antes de mover los controles:</strong> '+question+'</div></section>';
+  return '<section class="lab-shell" data-lab="'+id+'" aria-label="Mini laboratorio: '+title+'"><div class="lab-kicker">Mini-laboratorio · 3–5 minutos</div><h4>'+title+'</h4><p class="lab-intro">'+intro +'</p><div class="lab-question"><strong>Predice antes de experimentar:</strong> '+question+'</div><div class="lab-grid"><div class="lab-inputs">'+inputs+'</div><div class="lab-results"><div class="lab-result" aria-live="polite"></div></div></div></section>';
 }
 function html(n){
  switch(Number(n)){
