@@ -1,0 +1,79 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IA con criterio · Fichas imprimibles</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#e0e8ee;font:10pt/1.38 Arial,sans-serif;color:#173047}
+.toolbar{background:#102e44;color:#fff;padding:15px 22px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.toolbar h1{font-size:16pt;margin:0}.toolbar p{margin:3px 0 0;font-size:9pt;color:#d3e8f0}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.controls select,.controls button,.controls a{background:#fff;border:0;border-radius:6px;color:#123c58;font:700 10pt Arial;padding:9px 10px;text-decoration:none;cursor:pointer}
+.controls .primary{background:#9fede2;color:#06483f}
+.sheet{width:210mm;height:297mm;margin:10px auto;background:#fff;padding:13mm 15mm 13mm;display:flex;flex-direction:column;gap:2mm;overflow:hidden;box-shadow:0 3px 14px #17304733}
+.sheet[hidden]{display:none!important}
+.head{display:flex;justify-content:space-between;border-bottom:1px solid #0d6c84;padding-bottom:2.5mm;color:#0b5970;font-weight:bold;font-size:9pt}
+h2{font-size:18pt;line-height:1.12;margin:0;color:#122d44}h3{font-size:14pt;margin:0;color:#122d44}.tag{color:#506b7a;font-size:8pt}
+.name{display:flex;gap:12mm;margin:2mm 0;font-size:8.6pt}.name span{flex:1}.name i{display:inline-block;border-bottom:1px solid #91a8b6;width:65%}
+.focus,.case,.prompt{border:1px solid #bccdd6;border-radius:2mm;padding:2.5mm 3mm;font-size:9.1pt}
+.focus{background:#e9f5f7;border-left:3px solid #0c7188}.case{background:#f8fafb}
+.sub{font-size:8pt;color:#526a7a}.sect{display:flex;gap:2mm;align-items:center;color:#0b5a71;font-size:9pt;font-weight:bold;border-bottom:1px solid #cbdae2;padding-bottom:1.5mm;margin-top:1mm}
+.sect b{width:6mm;height:6mm;border-radius:2mm;background:#0c637e;color:white;display:grid;place-items:center;font-size:9pt}
+.step{margin:1mm 0;padding:1mm;border-bottom:1px dotted #d2dfe6;break-inside:avoid;font-size:9pt}
+.step b{font-size:9.3pt}.num{display:inline-grid;place-items:center;border-radius:50%;width:5.5mm;height:5.5mm;background:#d9eaf0;color:#0e5b71}
+.prompt{background:#f5f9fa;margin:2mm 0 1mm 5mm;font-size:8.3pt;white-space:pre-wrap;line-height:1.35}
+.prompt strong{display:block;color:#08617c;font-size:8pt;margin-bottom:1mm}
+.write{border:1px solid #afc3cf;border-radius:2mm;height:26mm;flex:none;display:flex;flex-direction:column;overflow:hidden}
+.write.small{height:18mm}.write.large{height:32mm}
+.write strong{background:#edf4f7;border-bottom:1px solid #c1d3dc;color:#355568;font-size:8.3pt;padding:1.5mm 2mm}
+.lines{flex:1;background:repeating-linear-gradient(to bottom,transparent 0,transparent calc(7.8mm - 1px),#d3dee4 calc(7.8mm - 1px),#d3dee4 7.8mm)}
+.debate{margin:0;padding-left:6mm;font-size:8.7pt}.debate li{margin:1mm 0}
+.eval{border-collapse:collapse;width:100%;font-size:8.2pt}
+.eval th,.eval td{padding:1.2mm 1.7mm;border:1px solid #bdcfd8}.eval th{background:#eaf2f5}.eval td:not(:first-child){text-align:center;font-size:12pt}
+.eval td:first-child{width:70%}
+footer{margin-top:auto;border-top:1px solid #bed3dc;padding-top:2.5mm;display:flex;justify-content:space-between;color:#67818e;font-size:7.3pt}
+.sheet:nth-of-type(even){gap:1.4mm}
+.missing{max-width:680px;margin:30px auto;background:white;padding:20px;border-radius:9px}
+@page{size:A4;margin:0}
+@media print{
+ body{background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ .toolbar,.missing{display:none!important}
+ .sheet{margin:0;box-shadow:none;break-after:page;page-break-after:always}
+ .sheet:last-child{break-after:auto;page-break-after:auto}
+}
+</style></head><body>
+<div class="toolbar"><div><h1>IA con criterio · Fichas de trabajo</h1><p>A4 · 2 páginas por sesión · Prompts junto a los pasos · Recuadros para escribir</p></div>
+<div class="controls"><select id="sesion"><option value="all">Las 12 sesiones</option></select><button id="print" class="primary">Imprimir selección</button><button id="whole">Imprimir las 12</button><a href="./">Volver al taller</a></div></div>
+<div id="sheets"><div class="missing">Cargando fichas del taller…</div></div>
+<script>
+const maps={1:{2:0,3:1,4:2},2:{1:0,2:1,3:2},3:{2:0,3:1,4:2},4:{1:0,3:1,4:2},5:{2:0,3:1},6:{2:0,3:1,4:2},7:{2:0,4:1},8:{2:0,3:1,4:2},9:{2:0,3:1,4:2},10:{2:0,3:1,4:2},11:{3:0,4:1},12:{2:0,3:1,4:2}};
+const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const write=(label,size='')=>'<div class="write '+size+'"><strong>'+esc(label)+'</strong><div class="lines"></div></div>';
+function foot(s,n){return '<footer><span>TECNOMURILLO · IA CON CRITERIO</span><span>Desafío '+String(s.id).padStart(2,'0')+' · Hoja '+n+'/2</span><span>ProfeTonino</span></footer>'}
+function section(n,label){return '<div class="sect"><b>'+n+'</b><span>'+esc(label)+'</span></div>'}
+function prompt(s,n){const idx=maps[s.id][n];if(idx===undefined)return '';const p=s.prompts[idx];return '<div class="prompt"><strong>PROMPT · '+esc(p[0])+'</strong>'+esc(p[1])+'</div>'}
+function step(s,n){const a=s.steps[n-1];return '<div class="step"><b><span class="num">'+n+'</span> '+esc(a[0])+'</b><div>'+esc(a[1])+'</div>'+prompt(s,n)+'</div>'}
+function sheet(s,n,content){return '<section class="sheet" data-session="'+s.id+'"><div class="head"><span>IA CON CRITERIO · 2.º BACHILLERATO DE CIENCIAS · 50 MIN</span><span>'+String(s.id).padStart(2,'0')+' / 12</span></div>'+content+foot(s,n)+'</section>'}
+function render(s){
+ const title='<h2>'+esc(s.title)+'</h2>';
+ const name='<div class="name"><span>Nombre / grupo: <i></i></span><span>Fecha: <i></i></span></div>';
+ const question='<div class="focus"><strong>RETO:</strong> '+esc(s.challenge)+'</div><div class="sub">Objetivo: '+esc(s.objective)+' · Material: '+esc(s.material)+'</div>';
+ let extra='';
+ if(s.id===5)extra='<div class="case"><strong>Tabla para trabajar también en papel:</strong> años 2021–2025; satisfacción 81, 83, 84, 85 y 86 puntos sobre 100. Traza dos escalas (0–100 y 80–90) si no accedes a la web.</div>';
+ const one=title+'<div class="tag">'+esc(s.tag)+'</div>'+name+question+section(1,'EL CASO · 4 + 6 MINUTOS')+'<div class="case">'+esc(s.case)+'</div>'+extra+
+ write('Mi hipótesis antes de preguntar a la IA')+section(2,'EXPERIMENTA · PASOS 1 Y 2')+step(s,1)+step(s,2)+write('Mi primer resultado o una duda concreta','small')+write('Notas: respuesta de la IA y comprobación propia','large');
+ const questions='<ul class="debate">'+s.debate.map(q=>'<li>'+esc(q)+'</li>').join('')+'</ul>';
+ const table='<table class="eval"><thead><tr><th></th><th>Sí</th><th>En parte</th><th>Aún no</th></tr></thead><tbody>'+
+ ['He comprobado un dato o resultado de forma independiente.','Reconozco aciertos y límites de la IA.','Puedo justificar una conclusión propia.'].map(q=>'<tr><td>'+esc(q)+'</td><td>□</td><td>□</td><td>□</td></tr>').join('')+'</tbody></table>';
+ const two='<h3>'+esc(s.title)+'</h3>'+section(2,'EXPERIMENTA · PASOS 3 Y 4')+step(s,3)+step(s,4)+write('Mi evidencia comprobable / un error o límite de la IA')+section(3,'CONTRASTA Y CONVERSA · 10 MINUTOS')+questions+write('Mi conclusión después del debate')+section(4,'MI AUTOEVALUACIÓN · 5 MINUTOS')+'<div class="sub">Marca tu nivel de logro. No es una calificación.</div>'+table+write('Mi nuevo hábito cuando utilice IA','small');
+ return sheet(s,1,one)+sheet(s,2,two)
+}
+function show(v){document.querySelectorAll('.sheet').forEach(el=>{el.hidden=v!=='all' && el.dataset.session!==v})}
+fetch('./index.html',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('No se ha podido abrir la web original');return r.text()})
+.then(t=>{const m=t.match(/const sessions = (\[[\s\S]*?\]);\s*const/);if(!m)throw Error('No se han encontrado los datos de las sesiones');
+ const ss=JSON.parse(m[1]);if(ss.length!==12)throw Error('Datos de sesiones incompletos');
+ document.querySelector('#sheets').innerHTML=ss.map(render).join('');
+ const select=document.querySelector('#sesion');
+ ss.forEach(s=>{const o=document.createElement('option');o.value=s.id;o.textContent=String(s.id).padStart(2,'0')+' · '+s.title;select.appendChild(o)});
+ let q=new URLSearchParams(location.search).get('sesion');if(!ss.some(s=>String(s.id)===q))q='all';
+ select.value=q;show(q);select.onchange=()=>show(select.value);
+ document.querySelector('#print').onclick=()=>window.print();
+ document.querySelector('#whole').onclick=()=>{select.value='all';show('all');window.print()};
+}).catch(err=>{document.querySelector('#sheets').innerHTML='<div class="missing"><strong>No se pudieron cargar las fichas.</strong><p>'+esc(err.message)+'</p><a href="./">Volver al taller</a></div>'});
+</script></body></html>
